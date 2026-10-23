@@ -17,7 +17,8 @@
 #include "TLine.h"
 #include "TStyle.h"
 
-const double kHV[3] = {1600., 1800., 1900.};
+//const double kHV[3] = {1600., 1800., 1900.};
+const double kHV[5] = {1500., 1600., 1700., 1800., 1900.};
 const double kHVref = 1800.; // fit as p0*(HV/HVref)^p1 for numerical stability
 
 struct Fit { bool ok = false; double A = 0, a = 0, eA = 0, ea = 0; };
@@ -56,7 +57,7 @@ void gain_curve(const char *in = "pmt_gain.csv", const char *out = "gain_curve.p
 
   // id -> {T graph, B graph}
   std::map<int, std::vector<TGraph*>> graphs;
-  std::ifstream ifs(in);
+  std::ifstream ifs(in); //files
   std::string line;
   std::getline(ifs, line); // header
   while (std::getline(ifs, line)) {
@@ -64,16 +65,17 @@ void gain_curve(const char *in = "pmt_gain.csv", const char *out = "gain_curve.p
     std::vector<std::string> c;
     std::string tok;
     while (std::getline(ss, tok, ',')) c.push_back(tok);
-    int id = std::stoi(c[1]);
-    int side = (c[2] == "T") ? 0 : 1;
+    int id = std::stoi(c[1]);          // for example 15
+    int side = (c[2] == "T") ? 0 : 1;  // for example T
     if (graphs[id].empty()) graphs[id] = {nullptr, nullptr};
     TGraph *g = new TGraph();
-    for (int i = 0; i < 3; ++i) {
+    for (int i = 0; i < 5; ++i) {
       double y = std::stod(c[5 + i]);
       if (!std::isnan(y)) g->SetPoint(g->GetN(), kHV[i], y);
     }
     graphs[id][side] = g;
   }
+  
 
   FILE *fout = fopen("gain_fit.csv", "w");
   fprintf(fout, "seg,A,A_err,a,a_err\n");
@@ -102,14 +104,14 @@ void gain_curve(const char *in = "pmt_gain.csv", const char *out = "gain_curve.p
       }
     if (ymax <= 0) ymin = 100;
 
-    TH1F *frame = gPad->DrawFrame(1550, ymin * 0.5, 1950, 600);
+    TH1F *frame = gPad->DrawFrame(1450, ymin * 0.5, 1950, 600);
     frame->SetTitle(Form("Segment %d;HV [V];Gain [mV]", id));
     frame->GetXaxis()->SetLabelSize(0); // log x spans < 1 decade: draw labels by hand
     frame->GetXaxis()->SetTitleOffset(1.3);
     frame->GetYaxis()->SetMoreLogLabels();
     frame->GetYaxis()->SetNoExponent();
     gPad->Update();
-    for (double v = 1600; v <= 1900; v += 100) {
+    for (double v = 1500; v <= 1900; v += 100) {
       TLine *l = new TLine(v, ymin * 0.5, v, 600);
       l->SetLineStyle(3);
       l->Draw();
