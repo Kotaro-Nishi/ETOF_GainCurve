@@ -1,0 +1,17 @@
+HV,segment,side,noise,mip,trigger_vth,pic_noise,pic_mip,comment
+1650,3,T,126,151,139,Tek014.png,Tek016.png,
+1650,3,B,114,182,125,Tek015.png,Tek017.png,MIP: 60s溜め
+1650,19,T,180,163,198,Tek018.png,Tek020.png,
+1650,19,B,202,321,222,Tek019.png,Tek021.png,MIP: 120s溜め
+1700,3,T,140,176,154,Tek000.png,Tek002.png,
+1700,3,B,150,243,165,Tek001.png,Tek003.png,
+1700,19,T,207,165,228,Tek022.png,Tek024.png,
+1700,19,B,204,336,224,Tek023.png,Tek025.png,
+1750,3,T,200,223,220,Tek004.png,Tek006.png,
+1750,3,B,219,319,241,Tek005.png,Tek007.png,MIP: 60s溜め
+1750,19,T,256,199,282,Tek026.png,Tek028.png,
+1750,19,B,256,365,282,Tek027.png,Tek029.png,MIP:180s溜め
+1800,3,T,236,274,260,Tek010.png,Tek013.png,
+1800,3,B,237,357,260,Tek009.png,Tek011.png,MIP: 60s溜め
+1800,19,T,290,245,319,Tek030.png,Tek032.png,
+1800,19,B,320,450,352,Tek031.png,Tek033.png,MIP: 180s溜め
